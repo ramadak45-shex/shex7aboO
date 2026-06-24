@@ -2,16 +2,20 @@ import streamlit as st
 from google import genai
 import os
 
-# جێگیرکردنی کلیلی API تایبەت بە خۆت
-os.environ["GEMINI_API_KEY"] = "AQ.Ab8RN6L2lEx1MYrlumEnbC9xINpzkr0_F4o0QpfIMyUVfnriCA"
+# ڕێکخستنی سەرەتایی لاپەڕەی وێبەکە (دەبێت هەمیشە لە سەرەتای کۆدەکە بێت)
+st.set_page_config(page_title="RYZEN AI Web", page_icon="🤖", layout="centered")
+
+# خوێندنەوەی کلیلی API لە ستریملێت بە شێوازێکی پارێزراو
+if "GEMINI_API_KEY" in st.secrets:
+    os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
+else:
+    # ئەگەر لە سێرڤەر ڕێکنەخرابوو، لێرە کلیلەکەت دابنێ بۆ تاقیکردنەوەی ناوخۆیی (Local)
+    os.environ["GEMINI_API_KEY"] = "AQ.Ab8RN6L2lEx1MYrlumEnbC9xINpzkr0_F4o0QpfIMyUVfnriCA"
 
 try:
     client = genai.Client()
 except Exception as e:
     st.error(f"❌ کێشەیەک لە کتبێخانەی گوگل هەیە: {e}")
-
-# ڕێکخستنی لاپەڕەی وێبەکە
-st.set_page_config(page_title="RYZEN AI Web", page_icon="🤖", layout="centered")
 
 st.title("🤖 RYZEN AI Web")
 st.caption("🚀 وێبسایتی تایبەت بە ژیریی دەستکردی RYZEN - بە هێزی Gemini 2.5 Flash")
